@@ -39,7 +39,6 @@ module.exports = {
 			},
 			fromApp: {
 				type: Sequelize.STRING(128),
-				defaultValue: false,
 			},
 			createdAt: {
 				type: Sequelize.DATE,
