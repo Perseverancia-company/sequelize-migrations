@@ -2,6 +2,7 @@
 
 These are the migrations for the pacakge 'ts-app-models'.
 
-# Next
+# Naming convention
 
-The 'next' folder is a placeholder for the next migration that is to be introduced to the main branch, yet it hasn't been done because it would highly likely break previous code.
+Tables should have singular name and not have uppercase characters, example:
+- 'property-comment'
