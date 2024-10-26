@@ -7,59 +7,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		// Remove clientId column
-		try {
-			await queryInterface.removeColumn("oauth2-client", "clientId");
-		} catch (err) {
-			console.log(
-				"Couldn't remove clientId column, this is likely not important, " +
-					"because the column may have been removed already"
-			);
-			throw Error("Couldn't remove clientId column");
-		}
-
 		// Create clientId column again
-		try {
-			await queryInterface.addColumn("oauth2-client", "clientId", {
-				type: Sequelize.STRING,
-				primaryKey: true,
-				unique: true,
-			});
-		} catch (err) {
-			console.error(err);
-			throw Error("Couldn't add clientId column");
-		}
+		await queryInterface.changeColumn("oauth2-client", "clientId", {
+			type: Sequelize.STRING,
+			// Not necessary
+			// primaryKey: true,
+			// unique: true,
+		});
 	},
 	down: async (queryInterface, Sequelize) => {
-		console.log(`Going down`);
 		console.log(`WARNING: UUUID's will be lost here`);
-
-		// // Remove clientId column
-		// try {
-		// 	await queryInterface.removeColumn("oauth2-client", "clientId");
-		// } catch(err) {
-
-		// }
-
-		// try {
-		// 	// Create clientId column again with original properties
-		// 	await queryInterface.addColumn("oauth2-client", "clientId", {
-		// 		type: Sequelize.UUID,
-		// 		primaryKey: true,
-		// 		unique: true,
-		// 		defaultValue: Sequelize.UUIDV4,
-		// 	});
-		// } catch(err) {
-		// 	console.error(err);
-		// 	throw Error("Couldn't add column 'clientId'");
-		// }
 
 		try {
 			// Remove primary key constraint
 			await queryInterface.changeColumn("oauth2-client", "clientId", {
 				primaryKey: false,
 			});
-			console.log(`Remove primary key from 'clientId' column`);
+			// console.log(`Remove primary key from 'clientId' column`);
 
 			// Rename column back to temporary name
 			await queryInterface.renameColumn(
@@ -67,7 +31,7 @@ module.exports = {
 				"clientId",
 				"new_clientId"
 			);
-			console.log(`Rename column to temporary name`);
+			// console.log(`Rename column to temporary name`);
 		} catch (err) {
 			// console.error(err);
 			// throw Error("Couldn't change column properties");
@@ -75,34 +39,45 @@ module.exports = {
 			// If that failed, the clientId column exists but it's not primary key
 			// Remove it
 			await queryInterface.removeColumn("oauth2-client", "clientId");
-			console.log(`Removed 'clientId' column`);
+			// console.log(`Removed 'clientId' column`);
 		}
 
 		// Re-add original clientId column (without primary key)
 		await queryInterface.addColumn("oauth2-client", "clientId", {
 			type: Sequelize.UUID,
 			unique: true,
-			defaultValue: Sequelize.UUIDV4,
 		});
-		console.log(`Re-added 'clientId' column without primary key`);
+		// console.log(`Re-added 'clientId' column without primary key`);
 
 		try {
 			// Update existing rows with original UUIDs
 			await queryInterface.sequelize.query(
 				`UPDATE \`oauth2-client\` SET clientId = UUID()`
 			);
-			console.log(`Updated existing rows with original UUIDs`);
+			// console.log(`Updated existing rows with original UUIDs`);
 		} catch (err) {
 			console.error(err);
 			throw Error("Couldn't create UUIDs for OAuth2 client'");
 		}
 
-		// Add primary key constraint to clientId
-		await queryInterface.changeColumn("oauth2-client", "clientId", {
-			primaryKey: true,
-		});
+		try {
+			// Add primary key constraint to clientId
+			await queryInterface.addConstraint("oauth2-client", {
+				type: "PRIMARY KEY",
+				fields: ["clientId"],
+			});
+		} catch (err) {
+			console.error(err);
+			throw Error("Couldn't set primary key for 'clientId' column");
+		}
 
-		// Remove temporary column
-		await queryInterface.removeColumn("oauth2-client", "new_clientId");
+		try {
+			// Remove temporary column
+			await queryInterface.removeColumn("oauth2-client", "new_clientId");
+		} catch (err) {
+			console.error(err);
+			// This one is alright
+			// console.log("Couldn't remove temporary column");
+		}
 	},
 };
