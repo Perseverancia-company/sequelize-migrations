@@ -1,6 +1,6 @@
 # Public folder
 public/
-config/
+config/config.json
 .cache/
 
 # Package lock backup
