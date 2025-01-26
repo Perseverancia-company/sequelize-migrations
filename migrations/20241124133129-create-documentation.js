@@ -1,6 +1,6 @@
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-    const TABLE_NAME = "documentation";
+		const TABLE_NAME = "documentation";
 		await queryInterface.createTable(
 			TABLE_NAME,
 			{
