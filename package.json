@@ -1,32 +1,32 @@
 {
-  "name": "learn-sequelize",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "start": "ts-node models/index.ts",
-    "build": "tsup"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^22.3.0",
-    "@types/sequelize": "^4.28.20",
-    "sequelize-cli": "^6.6.2",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.2.4",
-    "typescript": "^5.5.4"
-  },
-  "dependencies": {
-    "felixriddle.ts-app-models": "^1.0.21",
-    "sequelize": "^6.37.3",
-    "sequelize-typescript": "^2.1.6",
-    "uuid": "^11.0.2"
-  }
+	"name": "sequelize-migrations",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"start": "ts-node models/index.ts",
+		"build": "tsup"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "^22.3.0",
+		"@types/sequelize": "^4.28.20",
+		"sequelize-cli": "^6.6.2",
+		"ts-node": "^10.9.2",
+		"tsup": "^8.2.4",
+		"typescript": "^5.5.4"
+	},
+	"dependencies": {
+		"felixriddle.ts-app-models": "^1.0.21",
+		"sequelize": "^6.37.3",
+		"sequelize-typescript": "^2.1.6",
+		"uuid": "^11.0.2"
+	}
 }
