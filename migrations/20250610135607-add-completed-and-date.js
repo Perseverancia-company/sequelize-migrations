@@ -1,6 +1,6 @@
 "use strict";
 
-import { DataTypes, QueryInterface, Sequelize } from "sequelize";
+const { DataTypes, QueryInterface, Sequelize } = require("sequelize");
 
 /**
  * Sequelize migration to add 'completed' and 'completedAt' fields to the 'task' table.
