@@ -2,6 +2,8 @@
 
 These are the migrations for the pacakge 'ts-app-models'.
 
+For [Usage, read here.](./Usage.md)
+
 ## Naming convention
 
 Tables should have singular name and not have uppercase characters, example:
